@@ -4,24 +4,14 @@ body{padding: 0;margin: 0}
 .clearfix:after { content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}
 .clearfix       { display:block;}
 .clear          { clear:both;}
-.error {/*
-    -webkit-transition:all 0.5s ease-in;
-       -moz-transition:all 0.5s ease-in;
-         -o-transition:all 0.5s ease-in;
-            transition:all 0.5s ease-in; */
-                background-color: red;
-                color: white }
-.good  {/*
-    -webkit-transition:all 0.5s ease-in;
-       -moz-transition:all 0.5s ease-in;
-         -o-transition:all 0.5s ease-in;
-            transition:all 0.5s ease-in; */
-                background-color: greenyellow; color: white }
+.error          { background-color: red; color: white }
+.good           { background-color: greenyellow; color: white }
 
-#canvas {}
+#canvas         { width:100%; height: 300px; position: absolute;}
+#pen            { position: absolute; top: 161px; left: 58px}
 /* ESCENE */
 #escene         { height: 300px; }
-#escene a       { position: absolute; text-decoration: none; color:#ccc; width: 30px; height: 30px; background-color: #ccc }
+#escene a       { position: absolute; text-decoration: none; color:#ccc; width: 50px; height: 50px; text-indent: -999em }
 #escene section { display: none }
 #escene section[data-level="0"] { display: block }
 /* STATS */
@@ -29,8 +19,7 @@ body{padding: 0;margin: 0}
 #stats > div    { float: left; width: 33% }
 #stats li       { display: inline; margin-right: 5px }
 /* HORMIGA */
-#hormiga        {  }
-#hormiga img    {opacity:1}
+#hormiga img    { opacity:1}
 #hormiga.good img,
 #hormiga.error img { opacity:0.2 }
 #hormigaMayor   {  margin-top: -100px }
@@ -38,13 +27,11 @@ body{padding: 0;margin: 0}
 #foods ul       { padding: 0; margin: 0}
 #foods span     { display: inline-block; width: 60px; height: 60px;
         background: #fff url(img/frutasCircle.png) no-repeat; margin-bottom: 5px; text-indent: -999em}
-#foods .good    { }
 /*TREASURE*/
 #treasure ul    { padding: 0; margin: 0}
-#treasure b     { display: inline-block; width: 80px; height: 80px;
-        background: #fff url(img/tesoros.png) no-repeat; margin-bottom: 5px; text-indent: -999em
-        ; opacity:0.2}
+#treasure b     { display: inline-block; width: 80px; height: 80px; background: #fff url(img/tesoros.png) no-repeat; margin-bottom: 5px; text-indent: -999em; opacity:0.2}
 #treasure b.good.fin { width: 100px }
 #treasure b.good{ text-indent: 0; opacity:1 }
-
-#end { height: 300px; display: none }
+/*END*/
+#end            { height: 300px; display: none }
+#end h1         { text-align: center; padding-top: 100px}
