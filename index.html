@@ -3,28 +3,70 @@
   <head>
     <title>Hormiga</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <META http-equiv="CACHE-CONTROL" content="NO-CACHE">
     <style type="text/css">
+        body{padding: 0;margin: 0}
+
         #escene { height: 300px }
         #escene a { position: absolute }
         #stats { height: 100px; overflow: hidden }
         #stats > div { float: left; width: 33% }
         #stats li { display: inline; margin-right: 15px }
         #hormiga { text-align: center }
+        .error {/*
+            -webkit-transition:all 0.5s ease-in;
+               -moz-transition:all 0.5s ease-in;
+                 -o-transition:all 0.5s ease-in;
+                    transition:all 0.5s ease-in;
+*/
+            background-color: red;
+            color: white }
+        .good  {/*
+            -webkit-transition:all 0.5s ease-in;
+               -moz-transition:all 0.5s ease-in;
+                 -o-transition:all 0.5s ease-in;
+                    transition:all 0.5s ease-in; */
+            background-color: greenyellow; color: white }
+        #foods span{
+            opacity:0.1;
+        }
+        #foods .good { color:green; opacity:1 }
+        #treasure b { }
+        #treasure b.good { text-indent: 0 }
+
     </style>
 
   </head>
   <body>
+      <div id="end" style="display:none" >
+          <h1>Felicidades has llegado al final</h1>
+      </div>
+      <canvas id="canvas" height="300" style="width:100%; height: 300px; position: absolute;"></canvas>
       <div id="escene">
-          <div id="pen" draggable="true"><b>-I-</b></div>
+          <div id="pen" draggable="true" style=" position: absolute "><b>-I-</b></div>
           <section id="" data-level="0" >
+              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
+              <a href="#" style="left:100px; top:50px" data-point="1">1</a>
+              <a href="#" style="left:150px; top:50px" data-point="2">2</a>
+              <a href="#" style="left:200px; top:50px" data-point="3" data-end="true">3</a>
+          </section>
+          <section id="" data-level="1" style="display:none" >
               <a href="#" style="left:50px; top:50px" data-point="0">0</a>
               <a href="#" style="left:100px; top:100px" data-point="1">1</a>
               <a href="#" style="left:150px; top:150px" data-point="2">2</a>
-              <a href="#" style="left:200px; top:200px" data-point="3" data-end="true">end</a>
+              <a href="#" style="left:200px; top:200px" data-point="3" data-treasure="1">3</a>
+          </section>
+          <section id="" data-level="2" style="display:none" >
+              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
+              <a href="#" style="left:100px; top:100px" data-point="1">1</a>
+              <a href="#" style="left:150px; top:50px" data-point="2">2</a>
+              <a href="#" style="left:200px; top:50px" data-point="3">3</a>
+              <a href="#" style="left:250px; top:50px" data-point="4">4</a>
           </section>
           
       </div>
       <div id="stats">
+          <span id="trace"style="float:right">0</span>
           <div id="foods">
               <ul>
                   <li><span>a</span></li>
@@ -45,10 +87,12 @@
               </ul>
 
           </div>
+          
           <div id="hormiga">
             <h1>Hormiga</h1>
+            <div id="message"></div>
           </div>
-          <div id="golds">
+          <div id="treasure">
             <ul>
                 <li><b>A</b></li>
                 <li><b>B</b></li>
@@ -58,105 +102,7 @@
             </ul>
           </div>
       </div>
-      <script type="text/javascript">
-          (function(window, undefined){
-              //cache HTML
-              var HTML = {
-                  escene    : document.getElementById('escene')
-                  ,food     : document.getElementById('foods')
-                  ,foods    : document.getElementById('foods').getElementsByTagName('span')
-                  ,golds    : document.getElementById('golds')
-                  ,gold     : document.getElementById('golds').getElementsByTagName('b')
-                  ,pen      : document.getElementById('pen')
-              };
-              //cada grupo de points es un nivel
-              //luego rendereo esto para posicionar los puntos en casa escenario
-              //a:es para saber si tiene premio [0|1]
-              var points        = [
-                  [{x:50,y:50,a:0},{x:100,y:100,a:0},{x:150,y:150,a:0},{x:200,y:200,a:0}]
-                  ,[{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0}]
-                  ,[{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0},{x:0,y:0,a:0}]
-              ];
-
-              var level         = 0;
-              var controlpoint  = 0;//esto se resetea en cada level
-              var hoverpoint    = false;//esto es para saber cuando está por encima y disparar la salida
-              var hoverpointIndex   = -1;
-              
-              //methods
-              var drag          = function(event){
-                  //console.log('mueve', event);
-                  var status = checkPoint({x:event.clientX, y:event.clientY });
-                  switch ( status ){
-                          case 0:
-                              break;
-                          case 1:
-                              console.info('perfect; ha pasado por una valido')
-                              break;
-                          case 2:
-                              console.error('está pasando por uno que no devería');
-                              this.style.display = 'none';
-                              this.draggable=false;
-                              break;
-                      }
-              };
-              var startDrag     = function(){
-                  
-              };//press sobre el de icono
-              var endDrag       = function(){
-                  
-              };//release sobre el de icono
-              var checkPoint        = function(e){
-                  var pointIndex = this.getAttribute('data-point');
-                    console.log(this.point);
-                    console.log();
-
-              }
-              var checkPointManual    = function(position){
-                  var status        = 0;//0=sigue moviento;1=siguiente POI;2=error POI
-                  var map           = points[level];
-                  var inpoint       = false;
-                  var i             = map.length;
-                  while(i--){
-                      if( ( position.x >map[i].x && position.x < (map[i].x+20) ) &&
-                            ( position.y >map[i].y && position.y < (map[i].y+20) ) ){
-                            hoverpoint      = true;
-                            inpoint         = true;
-                            hoverpointIndex = i;
-                      }
-                  }
-                  if(hoverpoint && !inpoint){
-                      if(hoverpointIndex > -1){
-                          status        = 2;
-                      }
-                      if(hoverpointIndex === controlpoint){
-                          status        = 1;
-                      }
-                      hoverpointIndex   = -1;
-                      hoverpoint        = false;
-                  }
-                  return status;
-              };
-
-              var nextLevel     = function(){};
-              var good          = function(){};
-              var error         = function(){};
-                var animateGood = function(){};
-                var animateError= function(){};
-
-              //AddEvents
-              //HTML.pen.addEventListener('drag', drag, false);
-              var a  = HTML.escene.getElementsByTagName('a');
-
-              var i = a.length;
-              console.log(a, i)
-              while(i--){
-                  a[i].addEventListener('dragenter', checkPoint, false);
-              }
-
-          })(window);
-
-
-      </script>
+      
+      <script type="text/javascript" src="hormiga.js" ></script>
   </body>
 </html>
