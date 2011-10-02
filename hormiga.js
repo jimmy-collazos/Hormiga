@@ -43,11 +43,18 @@ Element.prototype.removeClassName = function(name) {
               //cada grupo de points es un nivel
               //luego rendereo esto para posicionar los puntos en casa escenario
               //a:es para saber si tiene premio [0|1]
-              var points        = [
-                  [{x:50,y:50,a:0},{x:100,y:50,a:0},{x:150,y:50,a:0},{x:200,y:50,a:0}]
+              var points_        = [
+                  [{x:180,y:96,a:0},{x:180,y:190,a:0}
+                      ,{x:283,y:96,a:0},{x:283,y:190,a:0}
+                      ,{x:383,y:96,a:0},{x:383,y:190,a:0}
+                      ,{x:483,y:96,a:0},{x:483,y:190,a:0}
+                      ,{x:583,y:96,a:0},{x:583,y:190,a:0}
+                      ,{x:683,y:96,a:0},{x:683,y:190,a:0}]
+                  
                   ,[{x:50,y:50,a:0},{x:100,y:100,a:0},{x:150,y:150,a:0},{x:200,y:200,a:0}]
                   ,[{x:50,y:50,a:0},{x:100,y:100,a:0},{x:150,y:50,a:0},{x:200,y:50,a:0},{x:250,y:50,a:0}]
               ];
+              var points=[];
 
               //methods
               var drag          = function(e){
@@ -112,9 +119,12 @@ Element.prototype.removeClassName = function(name) {
               };//release sobre el de icono
               var checkPoint        = function(e){
                   var pointIndex = this.getAttribute('data-point');
+                  console.log(pointIndex, controlPoint)
                   if( controlPoint == pointIndex ){
                       controlPoint++;
+                      console.log(controlPoint)
                   }else{
+                      console.log('eror')
                       errorPoint = true;
                   }
               }
@@ -152,6 +162,13 @@ Element.prototype.removeClassName = function(name) {
                       return;
                   }
                   HTML.sections[level].style.display='block';
+
+                  if( HTML.pen ){
+                      var raw = HTML.sections[level].getAttribute('data-start').split(',');
+                      HTML.pen.style.top = raw[1]+'px';
+                      HTML.pen.style.left = raw[0]+'px';
+                  }
+
                   console.log('Pasando al nivel: ', level);
               };
               var good              = function(){
@@ -216,6 +233,20 @@ Element.prototype.removeClassName = function(name) {
               [].forEach.call(HTML.escenePoints, function(point) {
                   point.addEventListener('dragenter', checkPoint, false);
               });
+              [].forEach.call(HTML.sections , function(escenario){
+                  var pois = escenario.getElementsByTagName('a');
+                  var coordenadas=[];
+                  [].forEach.call(pois, function(p){
+                      var x = parseInt( p.style.left );
+                      var y = parseInt( p.style.top );
+                      var poi={x:x,y:y};
+                      coordenadas.push(poi);
+                  });
+                  points.push(coordenadas);
+              });
+              
+              //console.log(points);
+
               
               HTML.canvas.addEventListener('touchstart', startDrag);
               HTML.canvas.addEventListener('touchmove', function(e){

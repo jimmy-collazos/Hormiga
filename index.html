@@ -12,49 +12,67 @@
       </div>
       <canvas id="canvas" height="300" style="width:100%; height: 300px; position: absolute;"></canvas>
       <div id="escene">
-          <div id="pen" draggable="true" style=" position: absolute ">
+          <div id="pen" draggable="true" style=" position: absolute; top: 205px; left: 33px ">
               <!-- <b>-I-</b> -->
               <img src="media/hormiga_personaje.png" alt="" />
           </div>
-          <section data-level="0" data-food="0" data-start="0,0">
-              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
-              <a href="#" style="left:100px; top:50px" data-point="1">1</a>
-              <a href="#" style="left:150px; top:50px" data-point="2">2</a>
-              <a href="#" style="left:200px; top:50px" data-point="3" data-end="true">3</a>
+          <!-- -->
+          <section data-level="0" data-food="0" data-start="33,205" data-treasure="0">
+              <img src="media/bg01.png"/>
+              <a href="#" style="left:180px; top:96px" data-point="0">0</a>
+              <a href="#" style="left:180px; top:190px" data-point="1">1</a>
+              <a href="#" style="left:283px; top:96px" data-point="2">2</a>
+              <a href="#" style="left:283px; top:190px" data-point="3">3</a>
+              <a href="#" style="left:383px; top:96px" data-point="4">4</a>
+              <a href="#" style="left:383px; top:190px" data-point="5">5</a>
+              <a href="#" style="left:483px; top:96px" data-point="6">6</a>
+              <a href="#" style="left:483px; top:190px" data-point="7">7</a>
+              <a href="#" style="left:583px; top:96px" data-point="8">8</a>
+              <a href="#" style="left:583px; top:190px" data-point="9">9</a>
+              <a href="#" style="left:683px; top:96px" data-point="10">10</a>
+              <a href="#" style="left:683px; top:170px" data-point="11" >11</a>
           </section>
-          <section data-level="1"  data-food="1"  data-start="0,0">
-              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
-              <a href="#" style="left:100px; top:100px" data-point="1">1</a>
-              <a href="#" style="left:150px; top:150px" data-point="2">2</a>
-              <a href="#" style="left:200px; top:200px" data-point="3" data-treasure="1">3</a>
+          
+          <section data-level="1"  data-food="1"  data-start="65,215" data-treasure="1">
+              <img src="media/bg02.png"/>
+              <a href="#" style="left:83px; top:195px" data-point="0">0</a>
+              <a href="#" style="left:180px; top:91px" data-point="1">1</a>
+              <a href="#" style="left:273px; top:195px" data-point="2">2</a>
+              <a href="#" style="left:380px; top:91px" data-point="3">3</a>
+              <a href="#" style="left:473px; top:195px" data-point="4">4</a>
+              <a href="#" style="left:580px; top:91px" data-point="5">5</a>
+              <a href="#" style="left:673px; top:195px" data-point="6" >6</a>
           </section>
-          <section data-level="2"  data-food="2"  data-start="0,0" data-treasure="0" >
-              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
-              <a href="#" style="left:100px; top:100px" data-point="1">1</a>
-              <a href="#" style="left:150px; top:50px" data-point="2">2</a>
-              <a href="#" style="left:200px; top:50px" data-point="3">3</a>
-              <a href="#" style="left:250px; top:50px" data-point="4">4</a>
+          
+          <section data-level="2"  data-food="2"  data-start="58,37" data-treasure="2">
+              <img src="media/bg03.png"/>
+              <a href="#" style="left:180px; top:180px" data-point="0">0</a>
+              <a href="#" style="left:275px; top:90px" data-point="1">1</a>
+              <a href="#" style="left:375px; top:180px" data-point="2">2</a>
+              <a href="#" style="left:475px; top:90px" data-point="3">3</a>
+              <a href="#" style="left:575px; top:180px" data-point="4">4</a>
+              <a href="#" style="left:675px; top:90px" data-point="5" >5</a>
           </section>
-          <section data-level="3"  data-food="3"  data-start="0,0">
-              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
-              <a href="#" style="left:100px; top:100px" data-point="1">1</a>
-              <a href="#" style="left:150px; top:50px" data-point="2">2</a>
-              <a href="#" style="left:200px; top:50px" data-point="3">3</a>
-              <a href="#" style="left:250px; top:50px" data-point="4">4</a>
-          </section
-          <section data-level="4"  data-food="4"  data-start="0,0">
-              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
-              <a href="#" style="left:100px; top:100px" data-point="1">1</a>
-              <a href="#" style="left:150px; top:50px" data-point="2">2</a>
-              <a href="#" style="left:200px; top:50px" data-point="3">3</a>
-              <a href="#" style="left:250px; top:50px" data-point="4">4</a>
+          
+          <section data-level="3"  data-food="3"  data-start="58,161" data-treasure="3">
+              <img src="media/bg04.png" alt=""/>
+              <a href="#" style="left:177px; top:117px" data-point="0">0</a>
+              <a href="#" style="left:268px; top:173px" data-point="1">1</a>
+              <a href="#" style="left:368px; top:117px" data-point="2">2</a>
+              <a href="#" style="left:458px; top:173px" data-point="3">3</a>
+              <a href="#" style="left:548px; top:117px" data-point="4">4</a>
+              <a href="#" style="left:618px; top:173px" data-point="5">5</a>
+              <a href="#" style="left:670px; top:117px" data-point="6">6</a>
           </section>
-          <section data-level="5"  data-food="5"  data-start="0,0">
-              <a href="#" style="left:50px; top:50px" data-point="0">0</a>
-              <a href="#" style="left:100px; top:100px" data-point="1">1</a>
-              <a href="#" style="left:150px; top:50px" data-point="2">2</a>
-              <a href="#" style="left:200px; top:50px" data-point="3">3</a>
-              <a href="#" style="left:250px; top:50px" data-point="4">4</a>
+          
+          <section data-level="4"  data-food="4"  data-start="65,104" data-treasure="4">
+              <img src="media/bg05.png" alt="" />
+              <a href="#" style="left:162px; top:163px" data-point="0">0</a>
+              <a href="#" style="left:254px; top:97px" data-point="1">1</a>
+              <a href="#" style="left:340px; top:163px" data-point="2">2</a>
+              <a href="#" style="left:440px; top:97px" data-point="3">3</a>
+              <a href="#" style="left:540px; top:163px" data-point="4">4</a>
+              <a href="#" style="left:640px; top:105px" data-point="5" >5</a>
           </section>
           
       </div>
@@ -67,16 +85,6 @@
                   <li><span>a</span></li>
                   <li><span>b</span></li>
                   <li><span>b</span></li>
-                  <li><span>b</span></li>
-                  <li><span>c</span></li>
-                  <li><span>c</span></li>
-                  <li><span>c</span></li>
-                  <li><span>d</span></li>
-                  <li><span>d</span></li>
-                  <li><span>d</span></li>
-                  <li><span>e</span></li>
-                  <li><span>e</span></li>
-                  <li><span>e</span></li>
               </ul>
 
           </div>

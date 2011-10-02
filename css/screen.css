@@ -21,7 +21,7 @@ body{padding: 0;margin: 0}
 #canvas {}
 /* ESCENE */
 #escene         { height: 300px; }
-#escene a       { position: absolute; text-decoration: none; color:#ccc }
+#escene a       { position: absolute; text-decoration: none; color:#ccc; width: 30px; height: 30px; background-color: #ccc }
 #escene section { display: none }
 #escene section[data-level="0"] { display: block }
 /* STATS */
