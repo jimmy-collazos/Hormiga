@@ -1,3 +1,4 @@
+//PROTOTYPE
 Element.prototype.hasClassName = function(name) {
   return new RegExp("(?:^|\\s+)" + name + "(?:\\s+|$)").test(this.className);
 };
@@ -16,17 +17,18 @@ Element.prototype.removeClassName = function(name) {
 (function(window, undefined){
               //cache HTML
               var HTML = {
-                  escene    : document.getElementById('escene')
+                  escene        : document.getElementById('escene')
                   ,escenePoints : document.getElementById('escene').getElementsByTagName('a')
-                  ,sections : document.getElementById('escene').getElementsByTagName('section')
-                  ,food     : document.getElementById('foods')
-                  ,foods    : document.getElementById('foods').getElementsByTagName('span')
-                  ,treasures    : document.getElementById('treasure')
-                  ,treasure     : document.getElementById('treasure').getElementsByTagName('b')
-                  ,pen      : document.getElementById('pen')
-                  ,homriga  : document.getElementById('hormiga')
-                  ,end      : document.getElementById('end')
-                  ,canvas   : document.getElementById("canvas")
+                  ,sections     : document.getElementById('escene').getElementsByTagName('section')
+                  ,food         : document.getElementById('foods')
+                  ,foods        : document.getElementById('foods').getElementsByTagName('span')
+                  ,treasure     : document.getElementById('treasure')
+                  ,treasures    : document.getElementById('treasure').getElementsByTagName('b')
+                  ,pen          : document.getElementById('pen')
+                  ,hormiga      : document.getElementById('hormiga')
+                  ,hormigaImg   : document.getElementById('hormiga').getElementsByTagName('img')
+                  ,end          : document.getElementById('end')
+                  ,canvas       : document.getElementById("canvas")
                   ,canvasContext: document.getElementById("canvas").getContext('2d')
               };
               var level             = 0;
@@ -36,7 +38,8 @@ Element.prototype.removeClassName = function(name) {
               var hoverpoint        = false;//esto es para saber cuando está por encima y disparar la salida
               var hoverpointIndex   = -1;
               var paintStart        = false;
-              var pintPointLast     = {x:0,y:0};
+              var widthCanvas       = HTML.canvas.offsetWidth;
+              //var pintPointLast     = {x:0,y:0};
               //cada grupo de points es un nivel
               //luego rendereo esto para posicionar los puntos en casa escenario
               //a:es para saber si tiene premio [0|1]
@@ -53,9 +56,20 @@ Element.prototype.removeClassName = function(name) {
                   x = e.x;
                   y = e.y;
                   if (!paintStart) {
+                      //
+                      /*
+                      HTML.canvas.width         = widthCanvas;
+                      HTML.canvas.style.width   = widthCanvas+'px';
+                      HTML.canvas.style.height  = '300px';
+                      */
                       HTML.canvasContext.beginPath();
-                      HTML.canvasContext.moveTo(x, y);
+                      //
+                      HTML.canvasContext.lineJoin     = "round";
+                      HTML.canvasContext.lineWidth    = 10;
+                      HTML.canvasContext.strokeStyle  = "#585454";
+                      //
                       
+                      HTML.canvasContext.moveTo(x, y);
                       paintStart = true;
                     } else {
                       HTML.canvasContext.lineTo(x, y);
@@ -63,10 +77,12 @@ Element.prototype.removeClassName = function(name) {
                     }
               };
               var startDrag     = function(e){
-                HTML.canvasContext.lineJoin = "round";
-                HTML.canvasContext.lineWidth = 10;
-                HTML.canvasContext.strokeStyle = "#585454";
-                console.log('start');
+                  /*
+                HTML.canvas.width               = HTML.canvas.width;
+                HTML.canvasContext.lineJoin     = "round";
+                HTML.canvasContext.lineWidth    = 10;
+                HTML.canvasContext.strokeStyle  = "#585454";
+                */
               };//press sobre el de icono
               var endDrag       = function(e){
                   /*
@@ -86,9 +102,12 @@ Element.prototype.removeClassName = function(name) {
                   }
                   controlPoint  = 0;
                   errorPoint    = false;
+                  //borrando el canvas
+                  HTML.canvas.style.width='1px';
+                  HTML.canvas.style.height='1px';
+                  HTML.canvas.width=1;
                   HTML.canvasContext.closePath();
-                  HTML.canvas.width = HTML.canvas.width;
-
+                  paintStart=false;
 
               };//release sobre el de icono
               var checkPoint        = function(e){
@@ -132,9 +151,6 @@ Element.prototype.removeClassName = function(name) {
                       console.log('llega al final de pantalla');
                       return;
                   }
-
-
-
                   HTML.sections[level].style.display='block';
                   console.log('Pasando al nivel: ', level);
               };
@@ -146,19 +162,46 @@ Element.prototype.removeClassName = function(name) {
                   animateError();
               };
                 var animateGood     = function(){
-                    HTML.homriga.removeClassName('error');
-                    HTML.homriga.addClassName('good');
-                    HTML.foods[level].addClassName('good');
+                    var bgPosition,
+                        food,
+                        foodIndex       = HTML.sections[level].getAttribute('data-food')
+                        ,treasure
+                        ,treasureIndex  = HTML.sections[level].getAttribute('data-treasure');
+                    if(foodIndex){
+                        foodIndex                       = parseInt(foodIndex,10);
+                        food                            = HTML.foods[foodIndex];
+                        bgPosition                      = (foodIndex+1)*60;
+                        food.style.backgroundPosition   = '-'+bgPosition+'px 0px';
+                    }
+                    if(treasureIndex){
+                        treasureIndex                   = parseInt(treasureIndex);
+                        treasure                        = HTML.treasures[treasureIndex];
+                        bgPosition                      = (treasureIndex+1)*80;
+                        treasure.style.backgroundPosition   = '-'+bgPosition+'px 0px';
+                        treasure.addClassName('good');
+                    }
+                    HTML.hormigaImg[0].src='media/hormigaMayorOk.png';
+                    /*
+                    HTML.hormiga.removeClassName('error');
+                    HTML.hormiga.addClassName('good');
+                    */
                     setTimeout(animateReset, 1000);
                 };
                 var animateError    = function(){
-                    HTML.homriga.removeClassName('good');
-                    HTML.homriga.addClassName('error');
+                    //HTML.hormiga.removeClassName('good');
+                    //HTML.hormiga.addClassName('error');
+                    HTML.hormigaImg[0].src='media/hormigaMayorError.png';
                     setTimeout(animateReset, 1000);
                 };
                 var animateReset    = function(){
-                    HTML.homriga.removeClassName('good');
-                    HTML.homriga.removeClassName('error');
+                    //HTML.hormiga.removeClassName('good');
+                    //HTML.hormiga.removeClassName('error');
+                    HTML.hormigaImg[0].src='media/hormigaMayor.png';
+
+                    HTML.canvas.width=widthCanvas
+                    HTML.canvas.style.width=widthCanvas+'px'
+                    HTML.canvas.style.height='300px';
+                    //alert(widthCanvas);
                 }
                 var animateEnd      = function(){
                     HTML.escene.style.display='none';
@@ -182,15 +225,17 @@ Element.prototype.removeClassName = function(name) {
                   }else if(status==2){
                       errorPoint = true;
                   }
-                  drag();
+                  e.x = e.touches[0].pageX;
+                  e.y = e.touches[0].pageY;
+                  drag(e);
                   e.preventDefault();
               });
               HTML.canvas.addEventListener('touchend', endDrag, false);
-              HTML.canvas.width = HTML.canvas.offsetWidth;
-              
-              
+              HTML.canvas.width = widthCanvas;
 
-
-
-
+              if( navigator.platform.indexOf('iPad') !== -1 ||
+                navigator.platform.indexOf('armv') !== -1){
+                //
+                HTML.pen.style.display = 'none';
+              }
           })(window);
